@@ -1,5 +1,4 @@
 import random
-import sys
 import config
 
 class Event:
@@ -12,7 +11,7 @@ class Event:
         def __init__(self):
             # "Each ticket has a non-zero price, expressed in US Dollars."
             # Assume that each ticket has price between 1 and 50 US Dollars.
-            self.price = float("{:,.2f}".format(random.uniform(1, 50)))
+            self.price = float("{0:.2f}".format(random.uniform(1, 50)))
 
         def __lt__(self, other):
             return self.price < other.price
