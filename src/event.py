@@ -1,5 +1,6 @@
 import random
 import sys
+import config
 
 class Event:
 
@@ -38,7 +39,7 @@ class Event:
         #self.pos = pos
         
     def __str__(self):
-        padded_nid = str(self.nid).zfill(3)
+        padded_nid = str(self.nid).zfill(config.padding_size)
         min_price = 0 if not self.tickets else self.tickets[0]
         dist = 0
 

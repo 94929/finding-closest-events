@@ -1,4 +1,7 @@
 import numpy as np
+from  event import Event
 
-grid = np.zeros(shape=(10,10))
-
+if __name__ == "__main__":
+    e = Event()
+    print(e)
+    
