@@ -1,5 +1,5 @@
-import numpy as np
-from  event import Event
+from event import Event
+from grid import Grid
 
 if __name__ == "__main__":
     e = Event()
