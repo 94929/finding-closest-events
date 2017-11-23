@@ -6,7 +6,7 @@ import config
 """
 class Event:
 
-    """ Defined inner class, Ticket.
+    """ Define inner class, Ticket.
         Ticket class is not defined as outer class because 
         we are using it only in Event class in this situation. 
     """
@@ -42,7 +42,6 @@ class Event:
     def __str__(self):
         padded_nid = str(self.nid).zfill(config.padding_size)
         min_price = 'No Ticket Available' if not self.tickets else self.tickets[0]
-        dist = 0
 
-        return 'Event {} - {}, Distance {}'.format(padded_nid, min_price, dist)
+        return 'Event {} - {}'.format(padded_nid, min_price)
 
