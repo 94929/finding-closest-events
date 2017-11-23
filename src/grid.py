@@ -11,16 +11,12 @@ from event import Event
     Could have used singleton pattern to achieve the goal but that's overwhelming.
 """
 class Grid:
-    # User input coordinates.
     coordinates = (None, None)
     
-    # Our environment has 21x21 grid.
+    # Using a dictionary gives us a virtual experience on our program.
+    # This acts like the worlds operates within a range from -10 to 10 in x, y axis.
     grid = {}
     
-    # This is a list containing all events generated in the grid.
-    events = []
-
-
     def init_grid(coordinates):
         # TODO what if input is like "helhlehoe"?
         origin_x, origin_y = tupler.literal_eval(coordinates)
@@ -36,14 +32,42 @@ class Grid:
         # Assign valid coordinates.
         coordinates = trans_x, trans_y
 
-        # Create grid according to the specification.
-        #grid = np.zeros(shape=[config.width*2+1, config.height*2+1])
-
-        Grid.init_event()
+        Grid.create_events(Grid.grid)
     
+    # This returns a list of the five closest events.
+    def find_closest_events():
+        five_closest_distances = Grid.calculate_distances()[:5]
+        five_closest_locations = [location for location, _ in five_closest_distances]
+        five_closest_events = [Grid.grid[location] for location in five_closest_locations]
+        
+        print('Closest Events to ({}):'.format(Grid.coordinates))
+        for i in range(config.nb_closest_events):
+            event = five_closest_events[i]
+            distance = five_closest_distances[i][1]
+            print(event)
+        pass
+
+
+    # This returns a list of distances with corresponding locations.
+    def calculate_distances():
+        distances = []
+        for location in Grid.grid:
+            distance = Grid.calculate_distance(Grid.coordinates, location)
+            distances.append(location, distance)
+
+        # Before return, it sorts the list by tuple value (i.e. distance)
+        distances = sorted(distances, key=lambda x: x[1])
+        return distances
+
+
     # The distance between two points should be computed as the Manhattan distance.
     def calculate_distance(src, dst):
-        pass
+        src_x = src[0]
+        src_y = src[1]
+        dst_x = dst[0]
+        dst_y = dst[1]
+
+        return abs(src_x - dst_x) + abs(dst_x - dst_y)
 
     def validate_coordinates(x, y):
         return -config.width <= x <= config.width and -config.height <= y <= config.height
@@ -52,10 +76,11 @@ class Grid:
         return x + config.offset, y + config.offset
    
     # Initialise events and put them into the environment.
-    def init_event():
+    def create_events(grid):
         # Randomly generate and assign events for nb_events times.
         # Assume we have total 50 events in our environment.
         for _ in range(config.nb_events):
+            # Assume that the same random location will not be generated.
             rand_x = random.randint(-config.width, config.width)
             rand_y = random.randint(-config.height, config.height)
             location = rand_x, rand_y

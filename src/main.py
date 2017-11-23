@@ -6,5 +6,6 @@ if __name__ == "__main__":
     #print(e)
     
     coordinates = input('Please Input Coordinates:')
-    grid = Grid.init_grid(coordinates)
+    Grid.init_grid(coordinates)
+    Grid.find_closest_events()
 
