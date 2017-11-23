@@ -6,46 +6,38 @@ import config
 from event import Event
 
 
-""" Create static class, Grid.
-    Grid should be static as we only need one instance of this.
-    Could have used singleton pattern to achieve the goal but that's overwhelming.
-"""
 class Grid:
-    coordinates = (None, None)
     
-    # Using a dictionary gives us a virtual experience on our program.
-    # This acts like the worlds operates within a range from -10 to 10 in x, y axis.
-    grid = {}
-    
-    def init_grid(coordinates):
+    def __init__(self, coordinates):
         try:
-            x, y = tupler.literal_eval(coordinates)
-            if not Grid.validate_coordinates(x, y):
-                raise Exception
-            Grid.coordinates = x, y
+            self.coordinates = self.validate_coordinates(coordinates)
         except:
-            print('Please input valid form of co-ordinates.')
+            print('Please input a valid form of co-ordinates.')
             sys.exit()
 
-        Grid.create_events(Grid.grid)
-    
-    # This returns a list of the five closest events.
-    def find_closest_events():
-        five_closest_distances = Grid.calculate_distances()[:5]
-        five_closest_locations = [location for location, _ in five_closest_distances]
-        five_closest_events = [Grid.grid[location] for location in five_closest_locations]
+        # The dictionary grid works as our world.
+        self.grid = {}
+
+        # Then help initialising grid by creating new events in the world.
+        self.create_events()
         
-        print('Closest Events to {}:'.format(Grid.coordinates))
+    # This returns a list of the five closest events.
+    def find_closest_events(self):
+        five_closest_distances = self.calculate_distances()[:5]
+        five_closest_locations = [location for location, _ in five_closest_distances]
+        five_closest_events = [self.grid[location] for location in five_closest_locations]
+        
+        print('Closest Events to {}:'.format(self.coordinates))
         for i in range(config.nb_closest_events):
             event = five_closest_events[i]
             distance = five_closest_distances[i][1]
             print('{}, Distance {}'.format(event, distance))
 
     # This returns a list of distances with corresponding locations.
-    def calculate_distances():
+    def calculate_distances(self):
         distances = []
-        for location in Grid.grid:
-            distance = Grid.calculate_distance(Grid.coordinates, location)
+        for location in self.grid:
+            distance = self.calculate_distance(self.coordinates, location)
             distances.append((location, distance))
 
         # Before return, it sorts the list by tuple value (i.e. distance)
@@ -53,15 +45,22 @@ class Grid:
         return distances
 
     # The distance between two points should be computed as the Manhattan distance.
-    def calculate_distance(src, dst):
+    def calculate_distance(self, src, dst):
         # Manhattan distance = |Ax - Bx| + |Ay - By|
         return abs(src[0] - dst[0]) + abs(src[1] - dst[1])
 
-    def validate_coordinates(x, y):
-        return -config.width <= x <= config.width and -config.height <= y <= config.height
+    # Check if the user input is valid or not.
+    def validate_coordinates(self, coordinates):
+        x, y = tupler.literal_eval(coordinates)
+        w, h = config.width, config.height
+        
+        if not (-w <= x <= w and -h <= y <= h):
+            raise Exception
+        
+        return x, y
 
     # Initialise events and put them into the environment.
-    def create_events(grid):
+    def create_events(self):
         # Randomly generate and assign events for nb_events times.
         # Assume we have total 10 events in our environment.
         for _ in range(config.nb_events):
@@ -69,5 +68,5 @@ class Grid:
             rand_x = random.randint(-config.width, config.width)
             rand_y = random.randint(-config.height, config.height)
             location = rand_x, rand_y
-            grid[location] = Event()
+            self.grid[location] = Event()
 

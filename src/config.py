@@ -20,3 +20,4 @@ width = height = 10
 nb_events = 10
 nb_closest_events = 5
 
+
