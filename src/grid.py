@@ -20,17 +20,14 @@ class Grid:
     def init_grid(coordinates):
         # TODO what if input is like "helhlehoe"?
         origin_x, origin_y = tupler.literal_eval(coordinates)
-
+        print(origin_x, origin_y)
         # TODO Check if the translated co-ordinates are valid or not.
         if not Grid.validate_coordinates(origin_x, origin_y):
             print ('Please input valid co-ordinates...')
             return
         
-        # Once we know the coordinates are valid, we translate it into grid.
-        trans_x, trans_y = Grid.translate_coordinates(origin_x, origin_y)
-
         # Assign valid coordinates.
-        coordinates = trans_x, trans_y
+        Grid.coordinates = origin_x, origin_y
 
         Grid.create_events(Grid.grid)
     
@@ -40,20 +37,18 @@ class Grid:
         five_closest_locations = [location for location, _ in five_closest_distances]
         five_closest_events = [Grid.grid[location] for location in five_closest_locations]
         
-        print('Closest Events to ({}):'.format(Grid.coordinates))
+        print('Closest Events to {}:'.format(Grid.coordinates))
         for i in range(config.nb_closest_events):
             event = five_closest_events[i]
             distance = five_closest_distances[i][1]
             print(event)
-        pass
-
 
     # This returns a list of distances with corresponding locations.
     def calculate_distances():
         distances = []
         for location in Grid.grid:
             distance = Grid.calculate_distance(Grid.coordinates, location)
-            distances.append(location, distance)
+            distances.append((location, distance))
 
         # Before return, it sorts the list by tuple value (i.e. distance)
         distances = sorted(distances, key=lambda x: x[1])
@@ -72,9 +67,6 @@ class Grid:
     def validate_coordinates(x, y):
         return -config.width <= x <= config.width and -config.height <= y <= config.height
 
-    def translate_coordinates(x, y):
-        return x + config.offset, y + config.offset
-   
     # Initialise events and put them into the environment.
     def create_events(grid):
         # Randomly generate and assign events for nb_events times.
