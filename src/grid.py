@@ -1,4 +1,4 @@
-import numpy as np
+import sys
 import ast as tupler
 import random
 import config
@@ -18,16 +18,14 @@ class Grid:
     grid = {}
     
     def init_grid(coordinates):
-        # TODO what if input is like "helhlehoe"?
-        origin_x, origin_y = tupler.literal_eval(coordinates)
-        print(origin_x, origin_y)
-        # TODO Check if the translated co-ordinates are valid or not.
-        if not Grid.validate_coordinates(origin_x, origin_y):
-            print ('Please input valid co-ordinates...')
-            return
-        
-        # Assign valid coordinates.
-        Grid.coordinates = origin_x, origin_y
+        try:
+            x, y = tupler.literal_eval(coordinates)
+            if not Grid.validate_coordinates(x, y):
+                raise Exception
+            Grid.coordinates = x, y
+        except:
+            print('Please input valid form of co-ordinates.')
+            sys.exit()
 
         Grid.create_events(Grid.grid)
     
@@ -41,7 +39,7 @@ class Grid:
         for i in range(config.nb_closest_events):
             event = five_closest_events[i]
             distance = five_closest_distances[i][1]
-            print(event)
+            print('{}, Distance {}'.format(event, distance))
 
     # This returns a list of distances with corresponding locations.
     def calculate_distances():
@@ -54,15 +52,10 @@ class Grid:
         distances = sorted(distances, key=lambda x: x[1])
         return distances
 
-
     # The distance between two points should be computed as the Manhattan distance.
     def calculate_distance(src, dst):
-        src_x = src[0]
-        src_y = src[1]
-        dst_x = dst[0]
-        dst_y = dst[1]
-
-        return abs(src_x - dst_x) + abs(dst_x - dst_y)
+        # Manhattan distance = |Ax - Bx| + |Ay - By|
+        return abs(src[0] - dst[0]) + abs(src[1] - dst[1])
 
     def validate_coordinates(x, y):
         return -config.width <= x <= config.width and -config.height <= y <= config.height
@@ -70,7 +63,7 @@ class Grid:
     # Initialise events and put them into the environment.
     def create_events(grid):
         # Randomly generate and assign events for nb_events times.
-        # Assume we have total 50 events in our environment.
+        # Assume we have total 10 events in our environment.
         for _ in range(config.nb_events):
             # Assume that the same random location will not be generated.
             rand_x = random.randint(-config.width, config.width)
