@@ -16,5 +16,5 @@ padding_size = 3
 
 
 # configuration variables for class Grid and its inner class(es).
-width = 10
-
+width = height = offset = 10
+nb_events = 50
