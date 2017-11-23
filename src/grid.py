@@ -6,6 +6,7 @@ import config
 from event import Event
 
 
+# I could have used singleton pattern to ensure there is only one instance of Grid
 class Grid:
     
     def __init__(self, coordinates):
@@ -16,14 +17,15 @@ class Grid:
             sys.exit()
 
         # The dictionary grid works as our world.
+        # It provides the same environment as 2D array but better performance.
         self.grid = {}
 
         # Then help initialising grid by creating new events in the world.
         self.create_events()
         
-    # This returns a list of the five closest events.
+    # This returns(prints to the console) a list of the five closest events.
     def find_closest_events(self):
-        five_closest_distances = self.calculate_distances()[:5]
+        five_closest_distances = self.calculate_distances()[:config.nb_closest_events]
         five_closest_locations = [location for location, _ in five_closest_distances]
         five_closest_events = [self.grid[location] for location in five_closest_locations]
         
