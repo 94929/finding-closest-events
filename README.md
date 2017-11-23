@@ -19,10 +19,11 @@ size?
   
 **Example Program Run**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Please Input Coordinates:  
-&nbsp;&nbsp;&nbsp;&nbsp;\> 4, 2
+&nbsp;&nbsp;&nbsp;&nbsp;Please Input Coordinates: 4, 2
 
-&nbsp;&nbsp;&nbsp;&nbsp;Closest Events to (4,2):  
+&nbsp;&nbsp;&nbsp;&nbsp;Closest Events to (4, 2):  
 &nbsp;&nbsp;&nbsp;&nbsp;Event 003 - $30.29, Distance 3   
 &nbsp;&nbsp;&nbsp;&nbsp;Event 001 - $35.20, Distance 5  
-&nbsp;&nbsp;&nbsp;&nbsp;Event 006 - $01.40, Distance 12  
+&nbsp;&nbsp;&nbsp;&nbsp;Event 006 - $01.40, Distance 9  
+&nbsp;&nbsp;&nbsp;&nbsp;Event 009 - $01.40, Distance 10  
+&nbsp;&nbsp;&nbsp;&nbsp;Event 004 - $01.40, Distance 16  
