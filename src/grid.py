@@ -11,7 +11,8 @@ class Grid:
     
     def __init__(self, coordinates):
         try:
-            self.coordinates = self.validate_coordinates(coordinates)
+            trimmed_coordinates = coordinates.strip()
+            self.coordinates = self.validate_coordinates(trimmed_coordinates)
         except:
             print('Please input a valid form of co-ordinates.')
             sys.exit()
@@ -20,6 +21,7 @@ class Grid:
         # It provides the same environment as 2D array but better performance.
         self.grid = {}
 
+        # Create a list for tracking nids of the events
         self.nids = []
 
         # Then help initialising grid by creating new events in the world.

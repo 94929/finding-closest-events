@@ -15,7 +15,8 @@ class Event:
         def __init__(self):
             # "Each ticket has a non-zero price, expressed in US Dollars."
             # Assume that each ticket has price between 1 and 50 US Dollars.
-            self.price = float("{0:.2f}".format(random.uniform(config.min_price, config.max_price)))
+            price = random.uniform(config.min_price, config.max_price)
+            self.price = float("{0:.2f}".format(price))
 
         def __lt__(self, other):
             return self.price < other.price
@@ -35,10 +36,9 @@ class Event:
         
         # "Each event has zero or more tickets."
         # Assume that each event can hold a maximum of 10 tickets.
-        
         self.tickets = [self.Ticket() for _ in range (random.randint(config.min_nb_tickets, config.max_nb_tickets))]
 
-        # Assume that ticket list is sorted in terms of their price.
+        # Sort tickets after the creation of it.
         self.tickets.sort()
         
     def __str__(self):
