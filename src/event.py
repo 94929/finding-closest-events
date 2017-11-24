@@ -29,13 +29,15 @@ class Event:
             pennies = split[1].ljust(config.max_pennies_len, '0')
             return '${}.{}'.format(dollars, pennies)
 
-    def __init__(self):
+    def __init__(self, nid):
         # "Each event has a unique numeric identifier between 1 and 3."
-        self.nid = random.randint(config.min_nid, config.max_nid)
+        self.nid = nid
         
         # "Each event has zero or more tickets."
         # Assume that each event can hold a maximum of 10 tickets.
+        
         self.tickets = [self.Ticket() for _ in range (random.randint(config.min_nb_tickets, config.max_nb_tickets))]
+
         # Assume that ticket list is sorted in terms of their price.
         self.tickets.sort()
         

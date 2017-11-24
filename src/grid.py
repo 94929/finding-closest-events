@@ -20,6 +20,8 @@ class Grid:
         # It provides the same environment as 2D array but better performance.
         self.grid = {}
 
+        self.nids = []
+
         # Then help initialising grid by creating new events in the world.
         self.create_events()
         
@@ -70,5 +72,15 @@ class Grid:
             rand_x = random.randint(-config.width, config.width)
             rand_y = random.randint(-config.height, config.height)
             location = rand_x, rand_y
-            self.grid[location] = Event()
+
+            # Generate nid
+            nid = self.generate_nid()
+            self.nids.append(nid)
+
+            # Assign an event to the location given.
+            self.grid[location] = Event(nid)
+    
+    def generate_nid(self):
+        # For each event, this function generates appropriate nid.
+        return len(self.nids)+1
 
